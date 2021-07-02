@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row mt-3" style="text-align: center">
+            <div class="col">
+                <h3>Administration</h3>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Pseudo</th>
+                            <th>Prénom Nom</th>
+                            <th>Mail</th>
+                            <th>Téléphone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for participant in participants %}
+                        {% if participant.isActif == 1 %}
+                            <tr>
+                        {% else %}
+                            <tr class="table-danger">
+                        {% endif %}
+                            <td>
+                                <a href="{{ path('profil',{'id':participant.id}) }}">
+                                    {{ participant.pseudo }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('profil',{'id':participant.id}) }}">
+                                    {{ participant.prenom }} {{ participant.nom }}
+                                </a>
+                            </td>
+                            <td><a href="#">{{ participant.email }}</a></td>
+                            <td>{{ participant.telephone }}</td>
+                            <td>
+                                {% if participant.id != app.user.id %}
+                                    {% if participant.isActif == 1 %}
+                                        <a href="{{ path('admin_participant_desactiver', {'id':participant.id}) }}">Désactiver</a>
+                                    {% else %}
+                                        <a href="{{ path('admin_participant_activer', {'id':participant.id}) }}">Activer</a>
+                                    {% endif %}
+                                    <a href="{{ path('admin_participant_delete', {'id':participant.id}) }}">- Supprimer</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-outline-dark" href="{{ path('app_register') }}">Ajouter un participant</a>
+
+{% endblock %}

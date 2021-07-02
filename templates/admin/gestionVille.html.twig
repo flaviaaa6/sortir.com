@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}gestion des villes{% endblock %}
+
+{% block body %}
+
+    <h1>Gestion des villes</h1>
+
+
+    <br><br>
+
+    <div class="row">
+        <div class="col-6">
+            <table class="table table-striped table-hover">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">Ville</th>
+                    <th scope="col">Code Postal</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+
+                <tr>
+                    {% for ville in villes %}
+                <tr>
+                    {% if id and id == ville.id %}
+
+                        <form action="{{ path('validate_update_ville', {"id":ville.id}) }}">
+
+                            <td>
+                                <label for="nom"></label>
+                                <input type="text" name="nom" id="nom">
+                            </td>
+                            <td>
+                                <label for="codePostal"></label>
+                                <input type="text" name="codePostal" id="codePostal">
+                            </td>
+                            <td>
+                                <input class="btn btn-dark" type="submit" value="Valider">
+                            </td>
+
+                        </form>
+                    {% else %}
+                        <th scope="row">{{ ville.nom }}</th>
+                        <th scope="row">{{ ville.codePostal }}</th>
+
+                            <td>
+                                <a href="{{ path('delete_ville', {"id":ville.id}) }}">Supprimer</a>
+                                <a href="{{ path('update_ville', {"id":ville.id}) }}">Modifier</a>
+                            </td>
+
+                    {% endif %}
+                </tr>
+                {% endfor %}
+
+                <form action="{{ path('admin_ville') }}">
+                    <tr>
+                        <td>
+                            <label for="ville"></label>
+                            <input type="text" name="ville" id="ville">
+                        </td>
+                        <td>
+                            <label for="code_postal"></label>
+                            <input type="text" name="code_postal" id="code_postal">
+                        </td>
+                        <td>
+                            <input class="btn btn-dark" type="submit" value="Ajouter">
+                        </td>
+                    </tr>
+                </form>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+{% endblock %}

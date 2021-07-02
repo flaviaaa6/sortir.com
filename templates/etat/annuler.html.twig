@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annuler une sortie{% endblock %}
+
+{% block body %}
+    <h1 class="mx-auto">Annuler une sortie</h1>
+
+    <form action="{{ path('annuler',{'id':sortie.id}) }}" method="post">
+        <table class="mx-auto">
+            <tr>
+                <th>
+                    nom de la sortie :
+                </th>
+                <td>
+                    {{ sortie.nom }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Date de la sortie :
+                </th>
+                <td>
+                    {{ sortie.dateHeureDebut|date('d/m/Y') }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Ville Organisatrice :
+                </th>
+                <td>
+                    {{ sortie.site.nom }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Lieu :
+                </th>
+                <td>
+                    {{ sortie.lieu.nom }} {{ sortie.lieu.rue }} {{ sortie.lieu.ville.codePostal }} {{ sortie.lieu.ville.nom }}
+                </td>
+            </tr>
+
+
+            <tr>
+                <th>
+                    <label for="motif">Motif :</label>
+                </th>
+                <td>
+                    <textarea id="motif" name="motif"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="btn btn-outline-dark" type="submit" value="enregistrer">
+                </td>
+                <td>
+                    <a class="btn btn-outline-dark" href="{{ path('home') }}"> Annuler</a>
+                </td>
+            </tr>
+
+        </table>
+    </form>
+
+
+{% endblock %}

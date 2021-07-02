@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'une sortie!{% endblock %}
+
+{% block body %}
+    
+<div class="jumbotron">
+    <div class="col mb-3" style="text-align: center">
+        {% if id %}
+            <h3>Modifier une sortie</h3>
+        {% else %}
+            <h3>Créer une sortie</h3>
+        {% endif %}
+    </div>
+
+    {{ form_start(sortieForm) }}
+    {{ form_errors(sortieForm) }}
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(sortieForm.nom) }}
+            {{ form_row(sortieForm.dateHeureDebut) }}
+            {{ form_row(sortieForm.dateLimiteInscription) }}
+            <div class="row col-md-6">
+                {{ form_row(sortieForm.nbrInscriptionMax) }}
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(sortieForm.duree) }}
+                </div>
+                <div class="col-md-6" id="minutes">
+                    minutes
+                </div>
+            </div>
+            {{ form_row(sortieForm.infoSortie) }}
+        </div>
+        <div class="col-md-6">
+            <div class="col-10">
+                <br>
+                Ville organisatrice : {{ app.user.site.nom }}<br><br>
+                {{ form_row(lieuForm.ville) }}<br>
+                {{ form_row(sortieForm.lieu) }}<br>
+                Rue :<br><br>
+                Code postal : {# lieu.ville.codePostal#}<br><br>
+                Latitude :<br><br>
+                Longitude :<br>
+            </div>
+
+            <div class="row">
+                <div class="col-10">
+
+                </div>
+                <div class="col-2 mt-4">
+                    <a href="{{ path('add_lieu') }}">
+                        <img src="{{ asset('assets/images/add.png') }}" height="25px" alt="Ajouter un lieu">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            {{ form_row(sortieForm.enregistrer) }}
+        </div>
+        <div class="col">
+            {{ form_row(sortieForm.publier) }}
+        </div>
+        {% if id %}
+            <div class="col">
+                <a href="{{ path('remove_sortie', {'id': id }) }}" class="btn btn-danger">Supprimer</a>
+            </div>
+        {% endif %}
+        <div class="col">
+            <a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>
+        </div>
+    </div>
+    {{ form_end(sortieForm) }}
+
+{% endblock %}

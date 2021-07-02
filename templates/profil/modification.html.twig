@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Modification de votre profil</h1>
+    <h3>Ne remplir que les champs à modifier</h3>
+
+    {{ form_start(modifForm) }}
+    {{ form_widget(modifForm) }}
+    <button type="submit" class="btn btn-dark">Sauvegarder</button>
+    {{ form_end(modifForm) }}
+
+{% endblock %}
+
+{% block title %}Sortir.com{% endblock %}

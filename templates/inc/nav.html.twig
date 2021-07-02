@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ path('home') }}">
+        <img src="{{ asset('assets/images/logo3.png') }}" height="50px" alt="Logo">Sortir.com
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('home') }}">Home</a>
+            </li>
+            {% if app.user %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('profil',{'id':app.user.id}) }}">Gerer mon profil</a>
+                </li>
+                {% if not is_granted('ROLE_ADMIN') %}
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('add_sortie') }}">Creer une sortie</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+
+
+        </ul>
+
+
+        {% if app.user %}
+            <span class="navbar-text">Hello {{ app.user.pseudo }}
+                {% for role in app.user.roles %}
+                    {% if role == 'ROLE_ADMIN' %}
+                        (admin)
+                    {% endif %}
+                {% endfor %}
+                    </span>
+        {% endif %}
+
+        <ul class="nav navbar-nav">
+            {% if app.user %}
+            {% for role in app.user.roles %}
+                {% if role == 'ROLE_ADMIN' %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('admin_ville') }}">Villes</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('admin_gestion_site') }}">Sites</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('admin_gestion_participant') }}">Utilisateurs</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
+                </li>
+            {% else %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                </li>
+            {% endif %}
+        </ul>
+
+    </div>
+</nav>
+
+
